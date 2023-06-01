@@ -3,7 +3,6 @@ import axios from "axios";
 import { config } from "../config";
 import useAuth from "../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Role } from "../types/Roles";
 
 const BASE_URL = config.baseURL;
 const LOGIN_URL = "/auth/login";
@@ -43,15 +42,14 @@ function Login() {
           headers: {
             "Content-type": "application/json",
           },
-          withCredentials: true,
         }
       );
       console.log(JSON.stringify(res.data));
       const accessToken = res.data.token;
-      // TODO: Use roles in the future
-      const roles: Role[] = ["user"];
+      const userId = res.data.user.userId;
 
-      setAuth({ email, password, roles, accessToken });
+      window.localStorage.setItem("token", accessToken);
+      setAuth({ userId, accessToken });
 
       setEmail("");
       setPassword("");

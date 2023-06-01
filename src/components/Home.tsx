@@ -1,35 +1,38 @@
-import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { Link, useLoaderData } from "react-router-dom";
+import { Run } from "../types/Run";
+import HeatMap from "./HeatMap";
+import data from "./data";
+import Nav from "./Nav";
+
+type AllRunsResponse = {
+  runs: Run[];
+  count: number;
+};
 
 const Home = () => {
-  const { setAuth } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const loadedData = useLoaderData() as AllRunsResponse;
 
-  const logout = async () => {
-    // if used in more components, this should be in context
-    // axios to /logout endpoint
-    setAuth({ email: "", password: "", roles: [], accessToken: "" });
-    navigate("/linkpage");
-  };
+  const runs = loadedData.runs;
 
   return (
-    <section className="container">
-      <h1>Home</h1>
+    <div className="container">
+      <Nav />
+      <HeatMap width={364} height={130} data={data} />
       <br />
-      <p>You are logged in!</p>
-      <br />
-      <Link to="/editor">Go to the Editor page</Link>
-      <br />
-      <Link to="/admin">Go to the Admin page</Link>
-      <br />
-      <Link to="/lounge">Go to the Lounge</Link>
-      <br />
-      <Link to="/linkpage">Go to the link page</Link>
-      <div className="flexGrow">
-        <button onClick={logout}>Sign Out</button>
-      </div>
-    </section>
+      {runs.map((r, i) => (
+        <div key={i} className="run-card">
+          <div className="date">
+            <p className="date-day">{r.date.substring(8, 10)}</p>
+            <p className="date-month">MAY</p>
+          </div>
+          <div className="">
+            <Link to={`/runs/${r._id}`}>{r.location}</Link>
+            <p>{(r.distance / 1000).toFixed(2) + " km"}</p>
+          </div>
+        </div>
+      ))}
+      <Link to="/new-run">Add a new run</Link>
+    </div>
   );
 };
 
