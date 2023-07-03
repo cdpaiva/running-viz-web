@@ -15,10 +15,31 @@ async function getProfile(id: string | undefined) {
     },
   });
 
-  console.log("Inside get profile");
-  console.log(res.data);
-
   return res.data;
 }
 
-export { getProfile };
+async function createProfile(userId: string | undefined) {
+  const res = await axios.post(
+    BASE_URL + `/polar/profile`,
+    { userId },
+    { headers: { "Content-Type": "application/json" } }
+  );
+
+  console.log("Register user service");
+  console.log(res.data);
+  return res.data;
+}
+
+async function syncAccount(userId: string | undefined) {
+  const res = await axios.post(
+    BASE_URL + `/polar/sync`,
+    { userId },
+    { headers: { "Content-Type": "application/json" } }
+  );
+
+  console.log("Sync user service");
+  console.log(res.data);
+  return res.data;
+}
+
+export { getProfile, createProfile, syncAccount };

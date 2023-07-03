@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 
 type AuthData = {
@@ -8,7 +8,7 @@ type AuthData = {
 
 type AuthContext = {
   auth: AuthData | null;
-  setAuth: React.Dispatch<React.SetStateAction<AuthData>>;
+  setAuth: Dispatch<SetStateAction<AuthData>>;
   logout: Function;
 };
 

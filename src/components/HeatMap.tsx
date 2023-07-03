@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import { useMemo } from "react";
-import { dataValue } from "./data";
+import { dataValue } from "../utils/getHeatMapData";
 
 type HeatmapProps = {
   width: number;
@@ -48,6 +48,7 @@ function HeatMap({ width, height, data }: HeatmapProps) {
   const colorScale = d3
     .scaleSequential()
     .interpolator(d3.interpolate("#1e1e1e", "#00FF87"))
+    // .interpolator(d3.interpolateYlGn)
     .domain([min, max]);
 
   const allRects = data.map((d, i) => {

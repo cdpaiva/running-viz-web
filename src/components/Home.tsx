@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from "react-router-dom";
 import { Run } from "../types/Run";
 import HeatMap from "./HeatMap";
-import data from "./data";
+import getHeatMapData from "../utils/getHeatMapData";
 import Nav from "./Nav";
 
 type AllRunsResponse = {
@@ -13,6 +13,8 @@ const Home = () => {
   const loadedData = useLoaderData() as AllRunsResponse;
 
   const runs = loadedData.runs;
+
+  const data = getHeatMapData(loadedData.runs);
 
   return (
     <div className="container">
