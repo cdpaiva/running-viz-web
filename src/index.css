@@ -138,7 +138,7 @@ button:focus-visible {
 }
 
 .date {
-  border: 1px solid fuchsia;
+  border: 2px solid #646cff;
   width: 75px;
   height: 75px;
   border-radius: 100%;
@@ -176,4 +176,21 @@ button:focus-visible {
   border-radius: 10px;
   padding: 5px;
   overflow-x: scroll;
+  position: relative;
+}
+
+.polar-profile-info {
+  border: 1px solid #747bff;
+  padding: 8px 12px;
+}
+
+.polar-profile-info>p {
+  text-align: center;
+}
+
+.polar-profile-container {
+  margin-block: 16px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
