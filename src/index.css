@@ -172,11 +172,11 @@ button:focus-visible {
 }
 
 .heat-map {
+  position: relative;
   background-color: #3d3d3d;
   border-radius: 10px;
   padding: 5px;
   overflow-x: scroll;
-  position: relative;
 }
 
 .polar-profile-info {
@@ -194,3 +194,15 @@ button:focus-visible {
   justify-content: space-around;
   align-items: center;
 }
+
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  padding: 4px;
+  margin-left: 15px;
+  transform: translateY(-50%);
+}
+
