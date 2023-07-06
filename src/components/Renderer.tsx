@@ -25,7 +25,7 @@ function Renderer({ width, height, data, setHoveredCell }: HeatmapProps) {
       .scaleBand()
       .range([0, boundsWidth])
       .domain(allXGroups)
-      .padding(0.1);
+      .padding(0.15);
   }, [data, width]);
 
   const yScale = useMemo(() => {
@@ -33,7 +33,7 @@ function Renderer({ width, height, data, setHoveredCell }: HeatmapProps) {
       .scaleBand()
       .range([boundsHeight, 0])
       .domain(allYGroups)
-      .padding(0.1);
+      .padding(0.15);
   }, [data, height]);
 
   const [min, max] = d3.extent<number>(data.map((d) => d.value || 0));

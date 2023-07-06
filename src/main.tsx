@@ -12,6 +12,7 @@ import ViewRun from "./components/ViewRun.tsx";
 import EditRun from "./components/EditRun.tsx";
 import Settings from "./components/Settings.tsx";
 import { getProfile } from "./service/polarService.ts";
+import ErrorBoundary from "./components/ErrorBoundary.tsx";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,7 @@ const router = createBrowserRouter([
             element: <Missing />,
           },
         ],
+        errorElement: <ErrorBoundary />,
       },
     ],
   },

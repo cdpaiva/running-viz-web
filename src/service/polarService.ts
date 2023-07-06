@@ -30,16 +30,22 @@ async function createProfile(userId: string | undefined) {
   return res.data;
 }
 
-async function syncAccount(userId: string | undefined) {
+async function syncAccount(userId: string) {
   const res = await axios.post(
     BASE_URL + `/polar/sync`,
     { userId },
     { headers: { "Content-Type": "application/json" } }
   );
 
-  console.log("Sync user service");
-  console.log(res.data);
-  return res.data;
+  if (res.status === 204) {
+    return "No new exercises found";
+  }
+
+  if (res.status === 200) {
+    return "Account synchronized successfully";
+  }
+
+  return "Failed to sync your account";
 }
 
 export { getProfile, createProfile, syncAccount };

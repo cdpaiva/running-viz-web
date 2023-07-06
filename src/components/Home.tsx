@@ -16,10 +16,38 @@ const Home = () => {
 
   const data = getHeatMapData(loadedData.runs);
 
+  const totalDistance = runs.reduce(
+    (acc: number, curr) => (acc += curr.distance),
+    0
+  );
+
+  const averageHeartRate = () => {
+    let total = 0;
+    let n = 0;
+    runs.forEach((r) => {
+      if (r.heartRateAverage) {
+        total += r.heartRateAverage;
+        n++;
+      }
+    });
+
+    return Math.round(total / n);
+  };
+
+  const averageDistance = () => {
+    return (totalDistance / (runs.length * 1000)).toFixed(2);
+  };
+
   return (
     <div className="container">
       <Nav />
-      <HeatMap width={364} height={130} data={data} />
+      <div>
+        <p>{`Total distance ran: ${(totalDistance / 1000).toFixed(2)} km`}</p>
+        <p>{`Number of runs: ${runs.length}`}</p>
+        <p>{`Average distance: ${averageDistance()} km`}</p>
+        <p>{`Average heart rate: ${averageHeartRate()}`}</p>
+      </div>
+      <HeatMap width={400} height={123} data={data} />
       <br />
       {runs.map((r, i) => (
         <div key={i} className="run-card">

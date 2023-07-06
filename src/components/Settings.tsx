@@ -7,6 +7,7 @@ import { useLoaderData } from "react-router-dom";
 import Nav from "./Nav";
 import { createProfile, syncAccount } from "../service/polarService";
 import useAuth from "../hooks/useAuth";
+import { useState } from "react";
 
 type profileResponse = {
   profile?: {
@@ -27,6 +28,7 @@ function Settings() {
   const profile = useLoaderData() as profileResponse;
   const { auth } = useAuth();
   const userId = auth?.userId;
+  const [notification, setNotification] = useState("");
 
   const registerPolarAccount = async () => {
     const res = await createProfile(userId);
@@ -35,29 +37,28 @@ function Settings() {
   };
 
   const sync = async () => {
-    await syncAccount(userId);
-    console.log("Should request info from the API");
+    if (userId) {
+      const syncStatus = await syncAccount(userId);
+      setNotification(syncStatus);
+    } else {
+      setNotification("");
+    }
   };
 
   return (
     <div className="container">
       <Nav></Nav>
       <p>Settings</p>
-      {profile.msg ? (
+      {!profile ? (
         <div className="">
-          {profile.msg === "User has no integrations." ? (
-            // <button onClick={handleClick}>Integrate with Polar Account</button>
-            <a
-              href={`https://flow.polar.com/oauth2/authorization?response_type=code&state=${userId}&client_id=f63d196a-b425-4176-bf11-de04a7c14b96&request_uri=http://localhost:3000/api/v1/polar/authCode`}
-            >
-              Start polar integration
-              <button onClick={registerPolarAccount}>
-                Register Polar Account
-              </button>
-            </a>
-          ) : (
-            <p>User has a polar acc set up, display some info about it here</p>
-          )}
+          <a
+            href={`https://flow.polar.com/oauth2/authorization?response_type=code&state=${userId}&client_id=f63d196a-b425-4176-bf11-de04a7c14b96&request_uri=http://localhost:3000/api/v1/polar/authCode`}
+          >
+            Start polar integration
+            <button onClick={registerPolarAccount}>
+              Register Polar Account
+            </button>
+          </a>
         </div>
       ) : (
         <>
