@@ -1,11 +1,6 @@
-/*
-    Settings needs to get information about the current user configuration
-    Specially, it should check if the user has already synced his polar account
-*/
-
 import { useLoaderData } from "react-router-dom";
 import Nav from "./Nav";
-import { createProfile, syncAccount } from "../service/polarService";
+import { syncAccount } from "../service/polarService";
 import useAuth from "../hooks/useAuth";
 import { useState } from "react";
 import Button from "./Button";
@@ -34,10 +29,10 @@ function Settings() {
   const [notification, setNotification] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const registerPolarAccount = async () => {
-    const res = await createProfile(userId);
-    setNotification("Account linked successfully.");
-  };
+  // const registerPolarAccount = async () => {
+  //   const res = await createProfile(userId);
+  //   setNotification("Account linked successfully.");
+  // };
 
   const sync = async () => {
     setLoading(true);
