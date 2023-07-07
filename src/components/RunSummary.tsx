@@ -34,7 +34,7 @@ function RunSummary(props: { runs: Run[] }) {
     <div className="py-4 flex flex-col gap-4 justify-center items-center">
       <div className="text-center border-2 rounded-lg px-4 py-3">
         <p className="text-3xl text-bold">{formatToKM(totalDistance)}</p>
-        <p>Total distance ran</p>
+        <p>Total distance</p>
       </div>
       <div className="flex gap-2">
         <div className="text-center border-1 rounded-lg sm:px-4 sm:py-3 p-2">

@@ -108,7 +108,7 @@ function ViewRun() {
           </button>
         </div>
         <div className="text-right underline hover:text-neon-green">
-          <Link to="/home">Back</Link>
+          <Link to="/dashboard">Back</Link>
         </div>
       </div>
     </div>

@@ -77,7 +77,7 @@ function Settings() {
         <>
           <div className="border-1 border-blue-500 px-4 py-3 text-center">
             <p>User integrated - Polar Account Information</p>
-            <div className="my-4 flex justify-around items-center">
+            <div className="my-4 flex flex-col sm:flex-row justify-around items-center">
               <div className="">
                 <p>
                   {`Name: ${profile.profile?.["first-name"]} ${profile.profile?.["last-name"]}`}
