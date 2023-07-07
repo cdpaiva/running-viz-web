@@ -3,11 +3,12 @@ import { config } from "../config";
 import { Run } from "../types/Run";
 
 const BASE_URL = config.baseURL;
-const token = localStorage.token;
 
 type getRunResponse = { run: Run };
 
 async function getRun(id: string | undefined): Promise<Run | null> {
+  const token = localStorage.token;
+
   if (!id) {
     return null;
   }
@@ -22,6 +23,8 @@ async function getRun(id: string | undefined): Promise<Run | null> {
 }
 
 async function getAllRuns() {
+  const token = localStorage.token;
+
   const res = await axios.get(BASE_URL + `/runs`, {
     headers: {
       "Content-type": "application/json",
@@ -33,6 +36,9 @@ async function getAllRuns() {
 }
 
 async function createRun(run: Run) {
+  const token = localStorage.token;
+
+  console.log(run);
   const res = await axios.post(BASE_URL + "/runs", run, {
     headers: {
       "Content-Type": "application/json",
@@ -44,17 +50,24 @@ async function createRun(run: Run) {
 }
 
 async function updateRun(run: Run) {
-  const res = await axios.patch(BASE_URL + `/runs/${run._id}`, run, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const token = localStorage.token;
 
-  return res.data;
+  try {
+    const res = await axios.patch(BASE_URL + `/runs/${run._id}`, run, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (err: any) {
+    return err.code;
+  }
 }
 
 async function deleteRun(id: string) {
+  const token = localStorage.token;
+
   const res = await axios.delete(BASE_URL + `/runs/${id}`, {
     headers: {
       "Content-Type": "application/json",

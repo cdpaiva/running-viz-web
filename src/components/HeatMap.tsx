@@ -16,10 +16,20 @@ export type InteractionData = {
 };
 
 function HeatMap({ width, height, data }: HeatmapProps) {
+  if (data.length === 0) {
+    return (
+      <div className="bg-neutral-600 rounded-lg p-2 relative overflow-x-scroll">
+        <p className="px-4 py-6">
+          No data collected, add new runs/sync your account first
+        </p>
+      </div>
+    );
+  }
+
   const [hoveredCell, setHoveredCell] = useState<InteractionData | null>(null);
 
   return (
-    <div className="heat-map">
+    <div className="bg-neutral-600 rounded-lg p-2 relative overflow-x-scroll">
       <Renderer
         width={width}
         height={height}

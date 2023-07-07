@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       userId: "",
       accessToken: "",
     });
-    navigate("/");
+    navigate("/login");
   };
 
   return (

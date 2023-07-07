@@ -13,6 +13,10 @@ function getDayOfYear(str: string) {
 }
 
 function getHeatMapData(runs: Run[]) {
+  if (runs.length === 0) {
+    return [];
+  }
+
   const mapDistanceToDays = runs.reduce((map: { [day: number]: number }, r) => {
     const day = getDayOfYear(r.date);
     if (map[day]) {

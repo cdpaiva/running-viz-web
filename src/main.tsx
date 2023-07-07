@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AuthLayout from "./components/AuthOutlet.tsx";
-import Home from "./components/Home.tsx";
+import Home from "./components/Dashboard.tsx";
 import { getAllRuns, getRun } from "./service/runService.ts";
 import AddRun from "./components/AddRun.tsx";
 import Missing from "./components/Missing.tsx";
@@ -13,6 +13,7 @@ import EditRun from "./components/EditRun.tsx";
 import Settings from "./components/Settings.tsx";
 import { getProfile } from "./service/polarService.ts";
 import ErrorBoundary from "./components/ErrorBoundary.tsx";
+import Register from "./components/Register.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,10 +24,15 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "/",
         element: <RequireAuth />,
         children: [
           {
-            path: "/",
+            path: "/dashboard",
             loader: async () => await getAllRuns(),
             element: <Home />,
           },

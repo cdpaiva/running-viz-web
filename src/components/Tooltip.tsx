@@ -13,7 +13,7 @@ const Tooltip = ({ interactionData }: TooltipProps) => {
 
   return (
     <div
-      className="tooltip"
+      className="absolute ml-4 bg-black rounded-md p-2 text-xs"
       style={{
         left: interactionData.xPos,
         top: interactionData.yPos,

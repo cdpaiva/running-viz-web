@@ -1,31 +1,38 @@
 import { useState, ChangeEvent } from "react";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { login } from "../service/authService";
+import { register } from "../service/authService";
 
-function Login() {
+function Register() {
   const { setAuth } = useAuth();
 
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errMsg, setErrMsg] = useState("");
+  const [error, setError] = useState("");
+
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setError("");
+    setName(e.target.value);
+  };
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setErrMsg("");
+    setError("");
     setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setErrMsg("");
+    setError("");
     setPassword(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await login(email, password);
+      const res = await register(name, email, password);
+      console.log(JSON.stringify(res.data));
       const accessToken = res.data.token;
       const userId = res.data.user.userId;
 
@@ -35,14 +42,12 @@ function Login() {
       setEmail("");
       setPassword("");
 
-      navigate("/dashboard");
+      navigate("/");
     } catch (err: any) {
       if (err.response?.status === 400) {
-        setErrMsg("Missing username of password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Authentication failed");
+        setError("Missing username of password");
       } else {
-        setErrMsg("Login failed, try again later");
+        setError("Registration failed, try again later");
       }
     }
   };
@@ -50,9 +55,26 @@ function Login() {
   return (
     <div className="container max-w-xl mx-auto mt-4 shadow-md rounded p-6 text-center">
       <h1 className="text-2xl font-black text-blue-500 my-4">Running Viz</h1>
-      <h2 className="text-xl font-black text-blue-400 my-4">LOGIN</h2>
-      <p className={errMsg ? "errMsg" : "offscreen"}>{errMsg}</p>
+      <h2 className="text-xl font-black text-blue-400 my-4">
+        CREATE NEW ACCOUNT
+      </h2>
+      <p className={error ? "error" : "offscreen"}>{error}</p>
       <form className="form" onSubmit={handleSubmit}>
+        <label
+          htmlFor="name"
+          className="block text-left text-sm font-bold mb-2"
+        >
+          Name:
+        </label>
+        <input
+          className="appearance-none border-2 border-white rounded w-full py-2 px-3 mb-2 focus:outline focus:outline-blue-500 bg-black text-white "
+          type="text"
+          id="name"
+          value={name}
+          onChange={handleNameChange}
+          autoComplete="off"
+          required
+        ></input>
         <label
           htmlFor="username"
           className="block text-left text-sm font-bold mb-2"
@@ -60,7 +82,7 @@ function Login() {
           Email:
         </label>
         <input
-          className="appearance-none border-2 border-white rounded w-full py-2 px-3 mb-2 focus:outline focus:outline-blue-500 bg-black text-white"
+          className="appearance-none border-2 border-white rounded w-full py-2 px-3 mb-2 focus:outline focus:outline-blue-500 bg-black text-white "
           type="email"
           id="username"
           value={email}
@@ -83,14 +105,14 @@ function Login() {
           required
         ></input>
         <button className="rounded-lg border-white border-2 my-4 px-4 py-3 transition-colors hover:border-neon-green hover:text-neon-green focus:text-neon-green">
-          Sign In
+          Register
         </button>
       </form>
       <a className="hover:underline hover:text-neon-green" href="/register">
-        Do not have an account yet? Register
+        Already have an account? Sign in
       </a>
     </div>
   );
 }
 
-export default Login;
+export default Register;

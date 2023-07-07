@@ -25,8 +25,6 @@ async function createProfile(userId: string | undefined) {
     { headers: { "Content-Type": "application/json" } }
   );
 
-  console.log("Register user service");
-  console.log(res.data);
   return res.data;
 }
 
@@ -34,7 +32,12 @@ async function syncAccount(userId: string) {
   const res = await axios.post(
     BASE_URL + `/polar/sync`,
     { userId },
-    { headers: { "Content-Type": "application/json" } }
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
 
   if (res.status === 204) {
